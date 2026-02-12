@@ -556,6 +556,353 @@
             .footer-content { flex-direction: column; text-align: center; }
             .hero-actions { flex-direction: column; width: 100%; }
             .btn { width: 100%; }
+            .concept-content { grid-template-columns: 1fr; }
+            .memory-content { grid-template-columns: 1fr; }
+        }
+
+        /* 名字由来 */
+        .naming-section {
+            background: var(--background);
+        }
+
+        .naming-content {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .naming-visual {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .naming-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 24px;
+        }
+
+        .naming-breakdown {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .naming-breakdown .labor {
+            color: var(--primary);
+        }
+
+        .naming-breakdown .any {
+            color: var(--secondary);
+        }
+
+        .naming-text {
+            flex: 2;
+        }
+
+        .naming-text h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .naming-text p {
+            color: var(--muted-foreground);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        /* Boss-Employee 模式 */
+        .concept-section {
+            background: linear-gradient(135deg, color-mix(in oklch, var(--primary) 5%, transparent) 0%, var(--background) 50%, color-mix(in oklch, var(--secondary) 5%, transparent) 100%);
+        }
+
+        .concept-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .concept-visual {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: calc(var(--radius) + 8px);
+            padding: 2rem;
+            box-shadow: 0 20px 60px -20px color-mix(in oklch, var(--foreground) 10%, transparent);
+        }
+
+        .concept-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+        }
+
+        .boss-box {
+            background: color-mix(in oklch, var(--primary) 15%, transparent);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 1.25rem 1.75rem;
+            text-align: center;
+        }
+
+        .boss-box .label {
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .boss-box .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .concept-arrow {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .employee-box {
+            background: color-mix(in oklch, var(--secondary) 15%, transparent);
+            border: 2px solid var(--secondary);
+            border-radius: 12px;
+            padding: 1.25rem 1.75rem;
+            text-align: center;
+        }
+
+        .employee-box .label {
+            font-size: 0.75rem;
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .employee-box .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .concept-list {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .concept-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .concept-list li:last-child {
+            border-bottom: none;
+        }
+
+        .concept-list li::before {
+            content: '📋';
+            font-size: 1.25rem;
+        }
+
+        .concept-text h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .concept-text p {
+            color: var(--muted-foreground);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        /* 记忆系统 */
+        .memory-section {
+            background: var(--muted);
+        }
+
+        .memory-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .memory-visual {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: calc(var(--radius) + 8px);
+            overflow: hidden;
+            box-shadow: 0 20px 60px -20px color-mix(in oklch, var(--foreground) 10%, transparent);
+        }
+
+        .memory-file {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .memory-file:last-child {
+            border-bottom: none;
+        }
+
+        .memory-file-icon {
+            width: 44px;
+            height: 44px;
+            background: color-mix(in oklch, var(--primary) 15%, transparent);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .memory-file-content h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .memory-file-content p {
+            font-size: 0.8rem;
+            color: var(--muted-foreground);
+        }
+
+        .memory-text h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .memory-text p {
+            color: var(--muted-foreground);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .memory-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .memory-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+        }
+
+        .memory-list li::before {
+            content: '•';
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Skill 系统 */
+        .skills-section {
+            background: var(--background);
+        }
+
+        .skills-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 3rem;
+        }
+
+        .skill-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .skill-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .skill-item-icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .skill-item-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* 流水线 */
+        .pipeline-section {
+            background: var(--muted);
+        }
+
+        .pipeline-visual {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: calc(var(--radius) + 8px);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .pipeline-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .pipeline-node {
+            background: color-mix(in oklch, var(--primary) 10%, transparent);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .pipeline-node-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pipeline-node-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .pipeline-arrow {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .pipeline-description {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .pipeline-description h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .pipeline-description p {
+            color: var(--muted-foreground);
+            line-height: 1.7;
         }
 </style>
 </head>
@@ -569,8 +916,9 @@
             </a>
             <ul class="nav-links">
                 <li><a href="#why">为什么</a></li>
+                <li><a href="#naming">名字</a></li>
+                <li><a href="#concept">理念</a></li>
                 <li><a href="#features">功能</a></li>
-                <li><a href="#workflow">使用</a></li>
                 <li><a href="https://github.com/laborany/laborany" target="_blank">GitHub</a></li>
             </ul>
             <a href="https://github.com/laborany/laborany/releases" class="nav-cta">下载</a>
@@ -639,6 +987,217 @@
                         <li>可视化文件管理和预览</li>
                     </ul>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 名字由来 -->
+    <section id="naming" class="section naming-section">
+        <div class="section-container">
+            <div class="naming-content">
+                <div class="naming-visual">
+                    <img src="logo.png" alt="LaborAny Logo" class="naming-logo">
+                    <div class="naming-breakdown">
+                        <span class="labor">Labor</span>
+                        <span class="any">Any</span>
+                    </div>
+                </div>
+                <div class="naming-text">
+                    <span class="section-label">名字由来</span>
+                    <h3>Labor + Any = 任何劳动</h3>
+                    <p>
+                        <strong>Labor</strong> 代表劳动、工作。我们相信 AI 应该成为真正能干活的「数字劳动力」，
+                        而不只是聊天机器人。
+                    </p>
+                    <p>
+                        <strong>Any</strong> 代表任何人、任何任务。无论你是程序员还是普通用户，
+                        无论是写代码还是处理文档，LaborAny 都能帮你完成。
+                    </p>
+                    <p>
+                        合在一起，<strong>LaborAny</strong> 的愿景是：让 AI 能够完成任何劳动，为任何人服务。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Boss-Employee 协作模式 -->
+    <section id="concept" class="section concept-section">
+        <div class="section-container">
+            <div class="concept-content">
+                <div class="concept-visual">
+                    <div class="concept-diagram">
+                        <div class="boss-box">
+                            <div class="label">你</div>
+                            <div class="value">👔 Boss</div>
+                        </div>
+                        <div class="concept-arrow">⇄</div>
+                        <div class="employee-box">
+                            <div class="label">AI</div>
+                            <div class="value">🤖 员工</div>
+                        </div>
+                    </div>
+                    <ul class="concept-list">
+                        <li><strong>下达任务</strong>：用自然语言描述你想要的结果</li>
+                        <li><strong>监督执行</strong>：实时查看 AI 的工作进度</li>
+                        <li><strong>验收成果</strong>：检查产出，提出修改意见</li>
+                        <li><strong>持续改进</strong>：AI 从反馈中学习，越用越好</li>
+                    </ul>
+                </div>
+                <div class="concept-text">
+                    <span class="section-label">协作理念</span>
+                    <h3>像管理员工一样管理 AI</h3>
+                    <p>
+                        LaborAny 独创的 <strong>Boss-Employee 协作模型</strong>，重新定义人与 AI 的关系。
+                        你是 Boss，AI 是你的数字员工。
+                    </p>
+                    <p>
+                        不同于传统的「问答式」AI 交互，LaborAny 让 AI 真正「干活」——
+                        它会主动规划任务、创建文件、执行操作，而你只需要像老板一样下达指令、监督进度、验收成果。
+                    </p>
+                    <p>
+                        每个 AI 员工都有自己的「工作手册」，定义了它的职责、工作方式和沟通规范。
+                        你可以随时查看和编辑这些规范，确保 AI 按照你的期望工作。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 记忆系统 -->
+    <section class="section memory-section">
+        <div class="section-container">
+            <div class="memory-content">
+                <div class="memory-text">
+                    <span class="section-label">记忆系统</span>
+                    <h3>透明的 AI 记忆</h3>
+                    <p>
+                        不同于其他 AI 工具的黑盒记忆，LaborAny 采用创新的<strong>纯文件记忆系统</strong>。
+                        所有「记忆」都以 Markdown 文件形式存储，完全透明可见。
+                    </p>
+                    <p>
+                        你可以直接打开这些文件，查看 AI 记住了什么，甚至可以手动编辑，添加或修改记忆内容。
+                        AI 会记住你的偏好、工作习惯、常用术语，越用越懂你。
+                    </p>
+                    <ul class="memory-list">
+                        <li><strong>工作手册</strong>：定义 AI 的行为规范和沟通方式</li>
+                        <li><strong>用户画像</strong>：记录你的偏好和工作习惯</li>
+                        <li><strong>长期记忆</strong>：跨会话持久化的知识和经验</li>
+                    </ul>
+                </div>
+                <div class="memory-visual">
+                    <div class="memory-file">
+                        <div class="memory-file-icon">📋</div>
+                        <div class="memory-file-content">
+                            <h4>CLAUDE.md — 工作手册</h4>
+                            <p>定义 AI 员工的基本行为规范</p>
+                        </div>
+                    </div>
+                    <div class="memory-file">
+                        <div class="memory-file-icon">👤</div>
+                        <div class="memory-file-content">
+                            <h4>用户画像 — 你的偏好</h4>
+                            <p>记录工作习惯、技术栈、沟通风格</p>
+                        </div>
+                    </div>
+                    <div class="memory-file">
+                        <div class="memory-file-icon">🧠</div>
+                        <div class="memory-file-content">
+                            <h4>长期记忆 — 知识库</h4>
+                            <p>跨会话持久化的学习成果</p>
+                        </div>
+                    </div>
+                    <div class="memory-file">
+                        <div class="memory-file-icon">💼</div>
+                        <div class="memory-file-content">
+                            <h4>Skill 记忆 — 专属空间</h4>
+                            <p>每个 Skill 独立的记忆档案</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skill 系统 -->
+    <section class="section skills-section">
+        <div class="section-container">
+            <span class="section-label">Skill 系统</span>
+            <h2 class="section-title">可复用的 AI 能力</h2>
+            <p class="section-description">
+                Skill 是 LaborAny 的核心概念——每个 Skill 都是一个预定义的工作流程，
+                封装了特定任务的最佳实践，一键调用，稳定输出。
+            </p>
+            <div class="skills-showcase">
+                <div class="skill-item">
+                    <div class="skill-item-icon">📊</div>
+                    <div class="skill-item-name">Excel 处理</div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-item-icon">📄</div>
+                    <div class="skill-item-name">Word 文档</div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-item-icon">📑</div>
+                    <div class="skill-item-name">PDF 处理</div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-item-icon">🎬</div>
+                    <div class="skill-item-name">视频创作</div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-item-icon">🎨</div>
+                    <div class="skill-item-name">前端设计</div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-item-icon">📈</div>
+                    <div class="skill-item-name">数据分析</div>
+                </div>
+            </div>
+            <p style="text-align: center; color: var(--muted-foreground);">
+                你也可以创建自己的 Skill，把常用的工作流程封装起来，一键复用。
+            </p>
+        </div>
+    </section>
+
+    <!-- 流水线工作 -->
+    <section class="section pipeline-section">
+        <div class="section-container">
+            <span class="section-label">流水线</span>
+            <h2 class="section-title">多 Skill 协作</h2>
+            <p class="section-description">
+                复杂任务往往需要多个步骤。LaborAny 支持将多个 Skill 串联成流水线，
+                自动化完成端到端的工作流程。
+            </p>
+            <div class="pipeline-visual">
+                <div class="pipeline-flow">
+                    <div class="pipeline-node">
+                        <div class="pipeline-node-icon">📥</div>
+                        <div class="pipeline-node-name">数据采集</div>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-node">
+                        <div class="pipeline-node-icon">🔍</div>
+                        <div class="pipeline-node-name">数据分析</div>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-node">
+                        <div class="pipeline-node-icon">📊</div>
+                        <div class="pipeline-node-name">生成报告</div>
+                    </div>
+                    <div class="pipeline-arrow">→</div>
+                    <div class="pipeline-node">
+                        <div class="pipeline-node-icon">📧</div>
+                        <div class="pipeline-node-name">发送通知</div>
+                    </div>
+                </div>
+            </div>
+            <div class="pipeline-description">
+                <h3>示例：自动化周报生成</h3>
+                <p>
+                    从多个数据源采集信息 → 分析关键指标 → 生成可视化报告 → 自动发送给相关人员。
+                    整个流程一键触发，无需人工干预。
+                </p>
             </div>
         </div>
     </section>
