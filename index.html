@@ -557,67 +557,20 @@
             .hero-actions { flex-direction: column; width: 100%; }
             .btn { width: 100%; }
 
-            /* 名字由来 */
-            .naming-cards {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
+            /* 名字由来 - 第一张卡片在小屏幕上垂直布局 */
             .naming-card:first-child {
                 flex-direction: column;
                 text-align: center;
                 gap: 1.5rem;
             }
-            .naming-logo {
-                width: 80px;
-                height: 80px;
-            }
-            .naming-breakdown {
-                font-size: 1.75rem;
-            }
 
-            /* Boss-Employee */
-            .concept-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 1rem;
-            }
-            .concept-card.main-card {
-                grid-column: span 2;
-            }
+            /* Boss-Employee - 主卡片在小屏幕上垂直布局 */
             .concept-diagram {
+                flex-direction: column;
                 gap: 1rem;
             }
-            .boss-box, .employee-box {
-                padding: 1rem;
-            }
-            .boss-box .value-icon, .employee-box .value-icon {
-                font-size: 1.75rem;
-            }
-
-            /* 记忆系统 */
-            .memory-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 1rem;
-            }
-            .memory-card {
-                padding: 1.5rem 1rem;
-            }
-            .memory-card-icon {
-                font-size: 2rem;
-            }
-
-            /* Skill 系统 */
-            .skills-showcase {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-            }
-            .skill-item {
-                padding: 1.25rem 1rem;
-            }
-            .skill-item-icon {
-                font-size: 2rem;
-            }
-            .skill-item-name {
-                font-size: 0.875rem;
+            .concept-arrow {
+                transform: rotate(90deg);
             }
 
             /* 流水线 */
@@ -636,21 +589,8 @@
                 max-width: 200px;
                 padding: 1rem;
             }
-            .pipeline-node-icon {
-                font-size: 1.5rem;
-                margin-bottom: 0.5rem;
-            }
-            .pipeline-node-name {
-                font-size: 0.85rem;
-            }
             .pipeline-visual {
                 padding: 2rem 1.5rem;
-            }
-            .pipeline-description h3 {
-                font-size: 1.25rem;
-            }
-            .pipeline-description p {
-                font-size: 0.95rem;
             }
 
             /* Section 通用 */
@@ -669,42 +609,6 @@
         @media (max-width: 480px) {
             .hero-title { font-size: 2rem; }
             .hero-subtitle { font-size: 1rem; }
-
-            .naming-cards {
-                gap: 0.75rem;
-            }
-            .naming-card {
-                padding: 1.25rem;
-            }
-            .naming-logo {
-                width: 60px;
-                height: 60px;
-            }
-            .naming-breakdown {
-                font-size: 1.5rem;
-            }
-
-            .concept-grid {
-                grid-template-columns: 1fr;
-            }
-            .concept-card.main-card {
-                grid-column: span 1;
-            }
-            .concept-diagram {
-                flex-direction: column;
-                gap: 0.75rem;
-            }
-            .concept-arrow {
-                transform: rotate(90deg);
-            }
-
-            .memory-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .skills-showcase {
-                grid-template-columns: repeat(2, 1fr);
-            }
 
             .section {
                 padding: 3rem 1rem;
@@ -736,7 +640,7 @@
 
         .naming-cards {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
             position: relative;
             z-index: 1;
@@ -868,7 +772,7 @@
 
         .concept-grid {
             display: grid;
-            grid-template-columns: 2fr repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
             position: relative;
             z-index: 1;
@@ -1003,7 +907,7 @@
 
         .memory-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
             position: relative;
             z-index: 1;
