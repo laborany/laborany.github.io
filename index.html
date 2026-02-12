@@ -558,106 +558,51 @@
             .btn { width: 100%; }
 
             /* 名字由来 */
-            .naming-content {
+            .naming-cards {
                 grid-template-columns: 1fr;
-                gap: 2rem;
+                gap: 1rem;
             }
-            .naming-visual {
-                order: 1;
-            }
-            .naming-text {
-                order: 2;
+            .naming-card:first-child {
+                flex-direction: column;
                 text-align: center;
-            }
-            .naming-text p {
-                text-align: left;
+                gap: 1.5rem;
             }
             .naming-logo {
-                width: 100px;
-                height: 100px;
+                width: 80px;
+                height: 80px;
             }
             .naming-breakdown {
-                font-size: 2rem;
-            }
-            .naming-text h3 {
-                font-size: 1.5rem;
-            }
-            .naming-text p {
-                font-size: 1rem;
+                font-size: 1.75rem;
             }
 
             /* Boss-Employee */
-            .concept-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+            .concept-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
             }
-            .concept-visual {
-                order: 1;
-                padding: 1.5rem;
-            }
-            .concept-text {
-                order: 2;
+            .concept-card.main-card {
+                grid-column: span 2;
             }
             .concept-diagram {
                 gap: 1rem;
-                padding: 1rem;
             }
             .boss-box, .employee-box {
-                padding: 1rem 1.25rem;
+                padding: 1rem;
             }
             .boss-box .value-icon, .employee-box .value-icon {
-                font-size: 2rem;
-            }
-            .boss-box .value-text, .employee-box .value-text {
-                font-size: 1rem;
-            }
-            .concept-arrow {
                 font-size: 1.75rem;
-            }
-            .concept-text h3 {
-                font-size: 1.5rem;
-            }
-            .concept-text p {
-                font-size: 1rem;
-            }
-            .concept-list li {
-                padding: 0.75rem 0;
-                font-size: 0.9rem;
             }
 
             /* 记忆系统 */
-            .memory-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+            .memory-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
             }
-            .memory-text {
-                order: 1;
+            .memory-card {
+                padding: 1.5rem 1rem;
             }
-            .memory-visual {
-                order: 2;
-            }
-            .memory-text h3 {
-                font-size: 1.5rem;
-            }
-            .memory-text p {
-                font-size: 1rem;
-            }
-            .memory-file {
-                padding: 1rem;
-            }
-            .memory-file:hover {
-                padding-left: 1rem;
-            }
-            .memory-file-icon {
-                width: 44px;
-                height: 44px;
-                font-size: 1.25rem;
-            }
-            .memory-file-content h4 {
-                font-size: 0.9rem;
-            }
-            .memory-file-content p {
-                font-size: 0.8rem;
+            .memory-card-icon {
+                font-size: 2rem;
             }
 
             /* Skill 系统 */
@@ -725,20 +670,36 @@
             .hero-title { font-size: 2rem; }
             .hero-subtitle { font-size: 1rem; }
 
+            .naming-cards {
+                gap: 0.75rem;
+            }
+            .naming-card {
+                padding: 1.25rem;
+            }
             .naming-logo {
-                width: 80px;
-                height: 80px;
+                width: 60px;
+                height: 60px;
             }
             .naming-breakdown {
-                font-size: 1.75rem;
+                font-size: 1.5rem;
             }
 
+            .concept-grid {
+                grid-template-columns: 1fr;
+            }
+            .concept-card.main-card {
+                grid-column: span 1;
+            }
             .concept-diagram {
                 flex-direction: column;
                 gap: 0.75rem;
             }
             .concept-arrow {
                 transform: rotate(90deg);
+            }
+
+            .memory-grid {
+                grid-template-columns: 1fr 1fr;
             }
 
             .skills-showcase {
@@ -750,7 +711,7 @@
             }
         }
 
-        /* 名字由来 */
+        /* 名字由来 - 新设计 */
         .naming-section {
             background: var(--background);
             position: relative;
@@ -768,20 +729,41 @@
             pointer-events: none;
         }
 
-        .naming-content {
+        .naming-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .naming-cards {
             display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 4rem;
-            align-items: center;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 1.5rem;
             position: relative;
             z-index: 1;
         }
 
-        .naming-visual {
+        .naming-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: calc(var(--radius) + 4px);
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .naming-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px -10px color-mix(in oklch, var(--primary) 20%, transparent);
+        }
+
+        .naming-card:first-child {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 1.5rem;
+            gap: 2rem;
+        }
+
+        .naming-card-visual {
+            flex-shrink: 0;
         }
 
         .naming-logo-wrapper {
@@ -791,7 +773,7 @@
         .naming-logo-wrapper::before {
             content: '';
             position: absolute;
-            inset: -20px;
+            inset: -15px;
             background: radial-gradient(circle, color-mix(in oklch, var(--primary) 15%, transparent) 0%, transparent 70%);
             border-radius: 50%;
             animation: pulse-glow 3s ease-in-out infinite;
@@ -803,20 +785,23 @@
         }
 
         .naming-logo {
-            width: 140px;
-            height: 140px;
-            border-radius: 28px;
+            width: 100px;
+            height: 100px;
+            border-radius: 20px;
             position: relative;
             z-index: 1;
-            box-shadow: 0 20px 40px -10px color-mix(in oklch, var(--primary) 30%, transparent);
+            box-shadow: 0 15px 30px -8px color-mix(in oklch, var(--primary) 30%, transparent);
+        }
+
+        .naming-card-text {
+            flex: 1;
         }
 
         .naming-breakdown {
-            display: flex;
-            gap: 0.25rem;
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 800;
             letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
         }
 
         .naming-breakdown .labor {
@@ -833,29 +818,37 @@
             color: transparent;
         }
 
-        .naming-text {
-            max-width: 550px;
-        }
-
-        .naming-text h3 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
-        }
-
-        .naming-text p {
+        .naming-card-text p {
             color: var(--muted-foreground);
-            line-height: 1.8;
-            margin-bottom: 1.25rem;
-            font-size: 1.05rem;
+            font-size: 1rem;
         }
 
-        .naming-text strong {
-            color: var(--foreground);
+        .naming-card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
         }
 
-        /* Boss-Employee 模式 */
+        .naming-card h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .naming-card p {
+            color: var(--muted-foreground);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .labor-card {
+            border-color: color-mix(in oklch, var(--primary) 30%, transparent);
+        }
+
+        .any-card {
+            border-color: color-mix(in oklch, var(--secondary) 30%, transparent);
+        }
+
+        /* Boss-Employee 模式 - 新设计 */
         .concept-section {
             background: var(--muted);
             position: relative;
@@ -873,75 +866,72 @@
             opacity: 0.3;
         }
 
-        .concept-content {
+        .concept-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
+            grid-template-columns: 2fr repeat(4, 1fr);
+            gap: 1.5rem;
             position: relative;
             z-index: 1;
         }
 
-        .concept-visual {
+        .concept-card {
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: calc(var(--radius) + 12px);
-            padding: 2.5rem;
-            box-shadow:
-                0 0 0 1px color-mix(in oklch, var(--primary) 5%, transparent),
-                0 25px 50px -12px color-mix(in oklch, var(--foreground) 15%, transparent);
+            border-radius: calc(var(--radius) + 4px);
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .concept-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px -10px color-mix(in oklch, var(--primary) 20%, transparent);
+        }
+
+        .concept-card.main-card {
+            grid-row: span 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
         }
 
         .concept-diagram {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 2rem;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
+            gap: 1.5rem;
         }
 
         .boss-box {
             background: linear-gradient(135deg, color-mix(in oklch, var(--primary) 15%, transparent) 0%, color-mix(in oklch, var(--primary) 8%, transparent) 100%);
             border: 2px solid var(--primary);
             border-radius: 16px;
-            padding: 1.5rem 2rem;
+            padding: 1.25rem 1.5rem;
             text-align: center;
             box-shadow: 0 8px 24px -8px color-mix(in oklch, var(--primary) 25%, transparent);
-            transition: all 0.3s;
-        }
-
-        .boss-box:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px -8px color-mix(in oklch, var(--primary) 35%, transparent);
         }
 
         .boss-box .label {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--primary);
             font-weight: 600;
-            margin-bottom: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
         }
 
-        .boss-box .value {
-            font-size: 1.75rem;
-            font-weight: 700;
-        }
-
         .boss-box .value-icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.25rem;
+            font-size: 2rem;
         }
 
         .boss-box .value-text {
-            font-size: 1.25rem;
+            font-size: 1rem;
             font-weight: 700;
         }
 
         .concept-arrow {
-            font-size: 2.5rem;
+            font-size: 2rem;
             color: var(--primary);
             animation: arrow-pulse 2s ease-in-out infinite;
         }
@@ -955,83 +945,45 @@
             background: linear-gradient(135deg, color-mix(in oklch, var(--secondary) 15%, transparent) 0%, color-mix(in oklch, var(--secondary) 8%, transparent) 100%);
             border: 2px solid var(--secondary);
             border-radius: 16px;
-            padding: 1.5rem 2rem;
+            padding: 1.25rem 1.5rem;
             text-align: center;
             box-shadow: 0 8px 24px -8px color-mix(in oklch, var(--secondary) 25%, transparent);
-            transition: all 0.3s;
-        }
-
-        .employee-box:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px -8px color-mix(in oklch, var(--secondary) 35%, transparent);
         }
 
         .employee-box .label {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--secondary);
             font-weight: 600;
-            margin-bottom: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
         }
 
-        .employee-box .value {
-            font-size: 1.75rem;
-            font-weight: 700;
-        }
-
         .employee-box .value-icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.25rem;
+            font-size: 2rem;
         }
 
         .employee-box .value-text {
-            font-size: 1.25rem;
+            font-size: 1rem;
             font-weight: 700;
         }
 
-        .concept-list {
-            list-style: none;
-        }
-
-        .concept-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--border);
-            transition: all 0.2s;
-        }
-
-        .concept-list li:hover {
-            padding-left: 0.5rem;
-        }
-
-        .concept-list li:last-child {
-            border-bottom: none;
-        }
-
-        .concept-list li::before {
-            content: '📋';
-            font-size: 1.25rem;
-            flex-shrink: 0;
-        }
-
-        .concept-text h3 {
+        .concept-card-icon {
             font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .concept-card h4 {
+            font-size: 1rem;
             font-weight: 700;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
+            margin-bottom: 0.25rem;
         }
 
-        .concept-text p {
+        .concept-card p {
             color: var(--muted-foreground);
-            line-height: 1.8;
-            margin-bottom: 1.25rem;
-            font-size: 1.05rem;
+            font-size: 0.85rem;
         }
 
-        /* 记忆系统 */
+        /* 记忆系统 - 新设计 */
         .memory-section {
             background: var(--background);
             position: relative;
@@ -1049,100 +1001,43 @@
             pointer-events: none;
         }
 
-        .memory-content {
+        .memory-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
             position: relative;
             z-index: 1;
         }
 
-        .memory-visual {
+        .memory-card {
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: calc(var(--radius) + 12px);
-            overflow: hidden;
-            box-shadow:
-                0 0 0 1px color-mix(in oklch, var(--primary) 5%, transparent),
-                0 25px 50px -12px color-mix(in oklch, var(--foreground) 15%, transparent);
+            border-radius: calc(var(--radius) + 4px);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
         }
 
-        .memory-file {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 1.25rem;
-            transition: all 0.2s;
+        .memory-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px -10px color-mix(in oklch, var(--primary) 20%, transparent);
         }
 
-        .memory-file:hover {
-            background: color-mix(in oklch, var(--primary) 3%, transparent);
-            padding-left: 2rem;
+        .memory-card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
         }
 
-        .memory-file:last-child {
-            border-bottom: none;
-        }
-
-        .memory-file-icon {
-            width: 52px;
-            height: 52px;
-            background: linear-gradient(135deg, color-mix(in oklch, var(--primary) 15%, transparent) 0%, color-mix(in oklch, var(--primary) 8%, transparent) 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-
-        .memory-file-content h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .memory-file-content p {
-            font-size: 0.875rem;
-            color: var(--muted-foreground);
-        }
-
-        .memory-text h3 {
-            font-size: 2rem;
+        .memory-card h4 {
+            font-size: 1.1rem;
             font-weight: 700;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
         }
 
-        .memory-text p {
+        .memory-card p {
             color: var(--muted-foreground);
-            line-height: 1.8;
-            margin-bottom: 1.25rem;
-            font-size: 1.05rem;
-        }
-
-        .memory-list {
-            list-style: none;
-            margin-top: 1.5rem;
-        }
-
-        .memory-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            padding: 0.75rem 0;
-        }
-
-        .memory-list li::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: var(--primary);
-            border-radius: 50%;
-            margin-top: 0.5rem;
-            flex-shrink: 0;
+            font-size: 0.9rem;
         }
 
         /* Skill 系统 */
@@ -1373,30 +1268,33 @@
     <!-- 名字由来 -->
     <section id="naming" class="section naming-section">
         <div class="section-container">
-            <div class="naming-content">
-                <div class="naming-visual">
-                    <div class="naming-logo-wrapper">
-                        <img src="logo.png" alt="LaborAny Logo" class="naming-logo">
+            <div class="naming-header">
+                <span class="section-label">名字由来</span>
+                <h2 class="section-title">Labor + Any</h2>
+            </div>
+            <div class="naming-cards">
+                <div class="naming-card">
+                    <div class="naming-card-visual">
+                        <div class="naming-logo-wrapper">
+                            <img src="logo.png" alt="LaborAny Logo" class="naming-logo">
+                        </div>
                     </div>
-                    <div class="naming-breakdown">
-                        <span class="labor">Labor</span>
-                        <span class="any">Any</span>
+                    <div class="naming-card-text">
+                        <div class="naming-breakdown">
+                            <span class="labor">Labor</span><span class="any">Any</span>
+                        </div>
+                        <p>让 AI 完成任何劳动，为任何人服务</p>
                     </div>
                 </div>
-                <div class="naming-text">
-                    <span class="section-label">名字由来</span>
-                    <h3>Labor + Any = 任何劳动</h3>
-                    <p>
-                        <strong>Labor</strong> 代表劳动、工作。我们相信 AI 应该成为真正能干活的「数字劳动力」，
-                        而不只是聊天机器人。
-                    </p>
-                    <p>
-                        <strong>Any</strong> 代表任何人、任何任务。无论你是程序员还是普通用户，
-                        无论是写代码还是处理文档，LaborAny 都能帮你完成。
-                    </p>
-                    <p>
-                        合在一起，<strong>LaborAny</strong> 的愿景是：让 AI 能够完成任何劳动，为任何人服务。
-                    </p>
+                <div class="naming-card labor-card">
+                    <div class="naming-card-icon">💪</div>
+                    <h4>Labor</h4>
+                    <p>真正能干活的数字劳动力，不只是聊天机器人</p>
+                </div>
+                <div class="naming-card any-card">
+                    <div class="naming-card-icon">🌐</div>
+                    <h4>Any</h4>
+                    <p>任何人、任何任务，无论技术背景</p>
                 </div>
             </div>
         </div>
@@ -1405,8 +1303,13 @@
     <!-- Boss-Employee 协作模式 -->
     <section id="concept" class="section concept-section">
         <div class="section-container">
-            <div class="concept-content">
-                <div class="concept-visual">
+            <span class="section-label">协作理念</span>
+            <h2 class="section-title">像管理员工一样管理 AI</h2>
+            <p class="section-description">
+                独创 Boss-Employee 协作模型，你是老板，AI 是你的数字员工。
+            </p>
+            <div class="concept-grid">
+                <div class="concept-card main-card">
                     <div class="concept-diagram">
                         <div class="boss-box">
                             <div class="label">你</div>
@@ -1420,28 +1323,26 @@
                             <div class="value-text">员工</div>
                         </div>
                     </div>
-                    <ul class="concept-list">
-                        <li><strong>下达任务</strong>：用自然语言描述你想要的结果</li>
-                        <li><strong>监督执行</strong>：实时查看 AI 的工作进度</li>
-                        <li><strong>验收成果</strong>：检查产出，提出修改意见</li>
-                        <li><strong>持续改进</strong>：AI 从反馈中学习，越用越好</li>
-                    </ul>
                 </div>
-                <div class="concept-text">
-                    <span class="section-label">协作理念</span>
-                    <h3>像管理员工一样管理 AI</h3>
-                    <p>
-                        LaborAny 独创的 <strong>Boss-Employee 协作模型</strong>，重新定义人与 AI 的关系。
-                        你是 Boss，AI 是你的数字员工。
-                    </p>
-                    <p>
-                        不同于传统的「问答式」AI 交互，LaborAny 让 AI 真正「干活」——
-                        它会主动规划任务、创建文件、执行操作，而你只需要像老板一样下达指令、监督进度、验收成果。
-                    </p>
-                    <p>
-                        每个 AI 员工都有自己的「工作手册」，定义了它的职责、工作方式和沟通规范。
-                        你可以随时查看和编辑这些规范，确保 AI 按照你的期望工作。
-                    </p>
+                <div class="concept-card">
+                    <div class="concept-card-icon">📝</div>
+                    <h4>下达任务</h4>
+                    <p>自然语言描述需求</p>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-card-icon">👁️</div>
+                    <h4>监督执行</h4>
+                    <p>实时查看工作进度</p>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-card-icon">✅</div>
+                    <h4>验收成果</h4>
+                    <p>检查产出提修改</p>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-card-icon">📈</div>
+                    <h4>持续改进</h4>
+                    <p>AI 从反馈中学习</p>
                 </div>
             </div>
         </div>
@@ -1450,53 +1351,31 @@
     <!-- 记忆系统 -->
     <section class="section memory-section">
         <div class="section-container">
-            <div class="memory-content">
-                <div class="memory-text">
-                    <span class="section-label">记忆系统</span>
-                    <h3>透明的 AI 记忆</h3>
-                    <p>
-                        不同于其他 AI 工具的黑盒记忆，LaborAny 采用创新的<strong>纯文件记忆系统</strong>。
-                        所有「记忆」都以 Markdown 文件形式存储，完全透明可见。
-                    </p>
-                    <p>
-                        你可以直接打开这些文件，查看 AI 记住了什么，甚至可以手动编辑，添加或修改记忆内容。
-                        AI 会记住你的偏好、工作习惯、常用术语，越用越懂你。
-                    </p>
-                    <ul class="memory-list">
-                        <li><strong>工作手册</strong>：定义 AI 的行为规范和沟通方式</li>
-                        <li><strong>用户画像</strong>：记录你的偏好和工作习惯</li>
-                        <li><strong>长期记忆</strong>：跨会话持久化的知识和经验</li>
-                    </ul>
+            <span class="section-label">记忆系统</span>
+            <h2 class="section-title">透明的 AI 记忆</h2>
+            <p class="section-description">
+                所有记忆以 Markdown 文件存储，完全透明可编辑，越用越懂你。
+            </p>
+            <div class="memory-grid">
+                <div class="memory-card">
+                    <div class="memory-card-icon">📋</div>
+                    <h4>工作手册</h4>
+                    <p>定义 AI 的行为规范</p>
                 </div>
-                <div class="memory-visual">
-                    <div class="memory-file">
-                        <div class="memory-file-icon">📋</div>
-                        <div class="memory-file-content">
-                            <h4>CLAUDE.md — 工作手册</h4>
-                            <p>定义 AI 员工的基本行为规范</p>
-                        </div>
-                    </div>
-                    <div class="memory-file">
-                        <div class="memory-file-icon">👤</div>
-                        <div class="memory-file-content">
-                            <h4>用户画像 — 你的偏好</h4>
-                            <p>记录工作习惯、技术栈、沟通风格</p>
-                        </div>
-                    </div>
-                    <div class="memory-file">
-                        <div class="memory-file-icon">🧠</div>
-                        <div class="memory-file-content">
-                            <h4>长期记忆 — 知识库</h4>
-                            <p>跨会话持久化的学习成果</p>
-                        </div>
-                    </div>
-                    <div class="memory-file">
-                        <div class="memory-file-icon">💼</div>
-                        <div class="memory-file-content">
-                            <h4>Skill 记忆 — 专属空间</h4>
-                            <p>每个 Skill 独立的记忆档案</p>
-                        </div>
-                    </div>
+                <div class="memory-card">
+                    <div class="memory-card-icon">👤</div>
+                    <h4>用户画像</h4>
+                    <p>记录偏好和习惯</p>
+                </div>
+                <div class="memory-card">
+                    <div class="memory-card-icon">🧠</div>
+                    <h4>长期记忆</h4>
+                    <p>跨会话持久化知识</p>
+                </div>
+                <div class="memory-card">
+                    <div class="memory-card-icon">💼</div>
+                    <h4>Skill 记忆</h4>
+                    <p>每个 Skill 独立空间</p>
                 </div>
             </div>
         </div>
