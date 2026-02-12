@@ -556,12 +556,198 @@
             .footer-content { flex-direction: column; text-align: center; }
             .hero-actions { flex-direction: column; width: 100%; }
             .btn { width: 100%; }
-            .concept-content { grid-template-columns: 1fr; }
-            .memory-content { grid-template-columns: 1fr; }
-            .naming-content { grid-template-columns: 1fr; text-align: center; }
-            .naming-text { text-align: left; }
-            .pipeline-flow { gap: 1rem; }
-            .pipeline-arrow { display: none; }
+
+            /* 名字由来 */
+            .naming-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .naming-visual {
+                order: 1;
+            }
+            .naming-text {
+                order: 2;
+                text-align: center;
+            }
+            .naming-text p {
+                text-align: left;
+            }
+            .naming-logo {
+                width: 100px;
+                height: 100px;
+            }
+            .naming-breakdown {
+                font-size: 2rem;
+            }
+            .naming-text h3 {
+                font-size: 1.5rem;
+            }
+            .naming-text p {
+                font-size: 1rem;
+            }
+
+            /* Boss-Employee */
+            .concept-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .concept-visual {
+                order: 1;
+                padding: 1.5rem;
+            }
+            .concept-text {
+                order: 2;
+            }
+            .concept-diagram {
+                gap: 1rem;
+                padding: 1rem;
+            }
+            .boss-box, .employee-box {
+                padding: 1rem 1.25rem;
+            }
+            .boss-box .value-icon, .employee-box .value-icon {
+                font-size: 2rem;
+            }
+            .boss-box .value-text, .employee-box .value-text {
+                font-size: 1rem;
+            }
+            .concept-arrow {
+                font-size: 1.75rem;
+            }
+            .concept-text h3 {
+                font-size: 1.5rem;
+            }
+            .concept-text p {
+                font-size: 1rem;
+            }
+            .concept-list li {
+                padding: 0.75rem 0;
+                font-size: 0.9rem;
+            }
+
+            /* 记忆系统 */
+            .memory-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .memory-text {
+                order: 1;
+            }
+            .memory-visual {
+                order: 2;
+            }
+            .memory-text h3 {
+                font-size: 1.5rem;
+            }
+            .memory-text p {
+                font-size: 1rem;
+            }
+            .memory-file {
+                padding: 1rem;
+            }
+            .memory-file:hover {
+                padding-left: 1rem;
+            }
+            .memory-file-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 1.25rem;
+            }
+            .memory-file-content h4 {
+                font-size: 0.9rem;
+            }
+            .memory-file-content p {
+                font-size: 0.8rem;
+            }
+
+            /* Skill 系统 */
+            .skills-showcase {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            .skill-item {
+                padding: 1.25rem 1rem;
+            }
+            .skill-item-icon {
+                font-size: 2rem;
+            }
+            .skill-item-name {
+                font-size: 0.875rem;
+            }
+
+            /* 流水线 */
+            .pipeline-flow {
+                gap: 0.75rem;
+                flex-direction: column;
+            }
+            .pipeline-arrow {
+                display: block;
+                transform: rotate(90deg);
+                font-size: 1.25rem;
+            }
+            .pipeline-node {
+                min-width: auto;
+                width: 100%;
+                max-width: 200px;
+                padding: 1rem;
+            }
+            .pipeline-node-icon {
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+            }
+            .pipeline-node-name {
+                font-size: 0.85rem;
+            }
+            .pipeline-visual {
+                padding: 2rem 1.5rem;
+            }
+            .pipeline-description h3 {
+                font-size: 1.25rem;
+            }
+            .pipeline-description p {
+                font-size: 0.95rem;
+            }
+
+            /* Section 通用 */
+            .section {
+                padding: 4rem 1.5rem;
+            }
+            .section-title {
+                font-size: 1.75rem;
+            }
+            .section-description {
+                font-size: 1rem;
+            }
+        }
+
+        /* 更小屏幕 */
+        @media (max-width: 480px) {
+            .hero-title { font-size: 2rem; }
+            .hero-subtitle { font-size: 1rem; }
+
+            .naming-logo {
+                width: 80px;
+                height: 80px;
+            }
+            .naming-breakdown {
+                font-size: 1.75rem;
+            }
+
+            .concept-diagram {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            .concept-arrow {
+                transform: rotate(90deg);
+            }
+
+            .skills-showcase {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .section {
+                padding: 3rem 1rem;
+            }
         }
 
         /* 名字由来 */
