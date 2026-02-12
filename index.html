@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaborAny - 让 Claude Code 触手可及</title>
+    <style>
+        :root {
+            --background: oklch(1 0 0);
+            --foreground: oklch(0.2101 0.0318 264.6645);
+            --card: oklch(1 0 0);
+            --card-foreground: oklch(0.2101 0.0318 264.6645);
+            --primary: oklch(0.6716 0.1368 48.513);
+            --primary-foreground: oklch(1 0 0);
+            --primary-600: oklch(0.6 0.14 45);
+            --secondary: oklch(0.536 0.0398 196.028);
+            --secondary-foreground: oklch(1 0 0);
+            --muted: oklch(0.967 0.0029 264.5419);
+            --muted-foreground: oklch(0.551 0.0234 264.3637);
+            --accent: oklch(0.9491 0 0);
+            --accent-foreground: oklch(0.2101 0.0318 264.6645);
+            --border: oklch(0.9276 0.0058 264.5313);
+            --radius: 0.75rem;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--background);
+            color: var(--foreground);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: color-mix(in oklch, var(--background) 85%, transparent);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .navbar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--foreground);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--muted-foreground);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--foreground);
+        }
+
+        .nav-cta {
+            background: var(--primary);
+            color: var(--primary-foreground);
+            padding: 0.6rem 1.25rem;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .nav-cta:hover {
+            background: var(--primary-600);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 6rem 2rem 4rem;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.5;
+        }
+
+        .hero-glow {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, color-mix(in oklch, var(--primary) 20%, transparent) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 900px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            background: color-mix(in oklch, var(--primary) 10%, transparent);
+            border: 1px solid color-mix(in oklch, var(--primary) 20%, transparent);
+            border-radius: 999px;
+            color: var(--primary);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-title .gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--muted-foreground);
+            max-width: 650px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--primary-foreground);
+            box-shadow: 0 4px 14px color-mix(in oklch, var(--primary) 30%, transparent);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-600);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px color-mix(in oklch, var(--primary) 40%, transparent);
+        }
+
+        .btn-secondary {
+            background: var(--accent);
+            color: var(--foreground);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--muted);
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Section 通用 */
+        .section {
+            padding: 6rem 2rem;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-description {
+            font-size: 1.125rem;
+            color: var(--muted-foreground);
+            max-width: 600px;
+            margin-bottom: 3rem;
+        }
+
+        /* 问题对比 */
+        .comparison-section {
+            background: var(--muted);
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .comparison-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: calc(var(--radius) + 4px);
+            padding: 2rem;
+            position: relative;
+        }
+
+        .comparison-card.old { opacity: 0.7; }
+
+        .comparison-card.new {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 1px var(--primary), 0 20px 40px -20px color-mix(in oklch, var(--primary) 20%, transparent);
+        }
+
+        .comparison-card.new::before {
+            content: '推荐';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--primary);
+            color: var(--primary-foreground);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+        }
+
+        .comparison-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .comparison-card.old .comparison-icon { background: var(--muted); }
+        .comparison-card.new .comparison-icon { background: color-mix(in oklch, var(--primary) 15%, transparent); }
+
+        .comparison-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .comparison-list {
+            list-style: none;
+        }
+
+        .comparison-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+            color: var(--muted-foreground);
+        }
+
+        .comparison-list li::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+
+        .comparison-card.old .comparison-list li::before {
+            background: var(--muted);
+            content: '×';
+        }
+
+        .comparison-card.new .comparison-list li::before {
+            background: color-mix(in oklch, var(--primary) 20%, transparent);
+            color: var(--primary);
+            content: '✓';
+            font-weight: 700;
+        }
+
+        /* 功能卡片 */
+        .features-section {
+            background: linear-gradient(180deg, var(--background) 0%, var(--muted) 50%, var(--background) 100%);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px -15px color-mix(in oklch, var(--primary) 25%, transparent);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            background: color-mix(in oklch, var(--primary) 10%, transparent);
+        }
+
+        .feature-name {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-desc {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+            line-height: 1.6;
+        }
+
+        /* 使用流程 */
+        .workflow-section {
+            background: var(--muted);
+        }
+
+        .workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            position: relative;
+        }
+
+        .workflow-steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+            z-index: 0;
+        }
+
+        .workflow-step {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .workflow-number {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--primary);
+            box-shadow: 0 4px 12px color-mix(in oklch, var(--foreground) 5%, transparent);
+        }
+
+        .workflow-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .workflow-desc {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+        }
+
+        /* CTA */
+        .cta-section {
+            background: linear-gradient(135deg, color-mix(in oklch, var(--primary) 10%, transparent) 0%, color-mix(in oklch, var(--secondary) 10%, transparent) 100%);
+            text-align: center;
+        }
+
+        .cta-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: calc(var(--radius) + 12px);
+            padding: 4rem 3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 30px 80px -30px color-mix(in oklch, var(--foreground) 10%, transparent);
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .cta-subtitle {
+            font-size: 1.125rem;
+            color: var(--muted-foreground);
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--muted);
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--muted-foreground);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--foreground);
+        }
+
+        .footer-copy {
+            color: var(--muted-foreground);
+            font-size: 0.875rem;
+        }
+
+        /* 动画 */
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-title { font-size: 2.5rem; }
+            .workflow-steps::before { display: none; }
+            .footer-content { flex-direction: column; text-align: center; }
+            .hero-actions { flex-direction: column; width: 100%; }
+            .btn { width: 100%; }
+        }
+</style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="#" class="logo">
+                <img src="logo.png" alt="LaborAny" class="logo-icon">
+                LaborAny
+            </a>
+            <ul class="nav-links">
+                <li><a href="#why">为什么</a></li>
+                <li><a href="#features">功能</a></li>
+                <li><a href="#workflow">使用</a></li>
+                <li><a href="https://github.com/laborany/laborany" target="_blank">GitHub</a></li>
+            </ul>
+            <a href="https://github.com/laborany/laborany/releases" class="nav-cta">下载</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-glow"></div>
+        <div class="hero-content">
+            <span class="hero-badge">开源免费</span>
+            <h1 class="hero-title">
+                让 <span class="gradient">Claude Code</span><br>触手可及
+            </h1>
+            <p class="hero-subtitle">
+                Claude Code 是目前最强大的 AI 编程助手，但命令行对普通人太难了。
+                LaborAny 把它变成一个简单的桌面应用，让每个人都能用上最前沿的 AI Agent。
+            </p>
+            <div class="hero-actions">
+                <a href="https://github.com/laborany/laborany/releases" class="btn btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    下载 LaborAny
+                </a>
+                <a href="https://github.com/laborany/laborany" class="btn btn-secondary" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    查看源码
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 为什么选择 LaborAny -->
+    <section id="why" class="section comparison-section">
+        <div class="section-container">
+            <span class="section-label">为什么选择 LaborAny</span>
+            <h2 class="section-title">让 Claude Code 的能力普惠化</h2>
+            <p class="section-description">
+                Claude Code 是 Anthropic 推出的 AI 编程助手，能理解整个代码库、自主完成复杂任务。
+                但命令行的门槛太高了，LaborAny 解决这个问题。
+            </p>
+            <div class="comparison-grid">
+                <div class="comparison-card old">
+                    <div class="comparison-icon">🖥️</div>
+                    <h3 class="comparison-title">原生 Claude Code</h3>
+                    <ul class="comparison-list">
+                        <li>需要安装 Node.js 环境</li>
+                        <li>命令行操作，学习成本高</li>
+                        <li>配置 API Key 繁琐</li>
+                        <li>文件管理不直观</li>
+                    </ul>
+                </div>
+                <div class="comparison-card new">
+                    <div class="comparison-icon">✨</div>
+                    <h3 class="comparison-title">LaborAny</h3>
+                    <ul class="comparison-list">
+                        <li>下载即用，零环境配置</li>
+                        <li>图形界面，对话式交互</li>
+                        <li>一次配置，永久保存</li>
+                        <li>可视化文件管理和预览</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 功能特性 -->
+    <section id="features" class="section features-section">
+        <div class="section-container">
+            <span class="section-label">核心功能</span>
+            <h2 class="section-title">不只是 GUI，更是增强</h2>
+            <p class="section-description">
+                LaborAny 不仅让 Claude Code 更易用，还增加了记忆系统、Skill 能力库等独特功能。
+            </p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3 class="feature-name">对话式交互</h3>
+                    <p class="feature-desc">用自然语言描述任务，AI 自动理解并执行。不需要学习任何命令。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📁</div>
+                    <h3 class="feature-name">可视化文件管理</h3>
+                    <p class="feature-desc">实时查看 AI 创建和修改的文件，支持预览文档、图片、代码等多种格式。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3 class="feature-name">记忆系统</h3>
+                    <p class="feature-desc">AI 会记住你的偏好和工作上下文，越用越懂你。记忆完全透明可编辑。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-name">Skill 能力库</h3>
+                    <p class="feature-desc">预置多种实用能力，一键调用。也可以创建自己的专属能���，复用工作流程。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🖥️</div>
+                    <h3 class="feature-name">跨平台支持</h3>
+                    <p class="feature-desc">支持 Windows、macOS、Linux。下载安装，双击打开，填入 API Key 即可使用。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔓</div>
+                    <h3 class="feature-name">完全开源</h3>
+                    <p class="feature-desc">代码完全开源，你可以自由查看、修改、分发。社区驱动，持续进化。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 使用流程 -->
+    <section id="workflow" class="section workflow-section">
+        <div class="section-container">
+            <span class="section-label">快速开始</span>
+            <h2 class="section-title">三步开始使用</h2>
+            <p class="section-description">
+                从下载到开始工作，只需要几分钟。
+            </p>
+            <div class="workflow-steps">
+                <div class="workflow-step">
+                    <div class="workflow-number">1</div>
+                    <h3 class="workflow-title">下载安装</h3>
+                    <p class="workflow-desc">前往 GitHub Releases 下载适合你系统的安装包</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-number">2</div>
+                    <h3 class="workflow-title">配置 API Key</h3>
+                    <p class="workflow-desc">在设置页面填入 Anthropic API Key</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-number">3</div>
+                    <h3 class="workflow-title">开始对话</h3>
+                    <p class="workflow-desc">输入你想做的事，AI 会自动完成任务</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section cta-section">
+        <div class="section-container">
+            <div class="cta-card">
+                <h2 class="cta-title">让 AI 真正为你工作</h2>
+                <p class="cta-subtitle">
+                    加入我们，一起推动 Claude Code 的普及，让更多人体验最前沿的 AI Agent。
+                </p>
+                <div class="hero-actions">
+                    <a href="https://github.com/laborany/laborany/releases" class="btn btn-primary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        立即下载
+                    </a>
+                    <a href="https://github.com/laborany/laborany" class="btn btn-secondary" target="_blank">
+                        查看源码
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="#" class="logo">
+                <img src="logo.png" alt="LaborAny" class="logo-icon">
+                LaborAny
+            </a>
+            <div class="footer-links">
+                <a href="https://github.com/laborany/laborany" target="_blank">GitHub</a>
+                <a href="https://github.com/laborany/laborany/releases" target="_blank">下载</a>
+                <a href="https://github.com/laborany/laborany/issues" target="_blank">反馈</a>
+            </div>
+            <div class="footer-copy">
+                © 2025 LaborAny. Open Source Project.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
